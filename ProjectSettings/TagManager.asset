@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - PickUp
+  - DoorWall
+  - ResetCollider
   layers:
   - Default
   - TransparentFX

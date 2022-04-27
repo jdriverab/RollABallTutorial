@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+
 public class PlayerController : MonoBehaviour
 {
 
@@ -11,6 +12,9 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI countText;
     public GameObject WinTextObject;
+    public GameObject WinTextObjectSecret;
+    public GameObject HiddenWall;
+    public GameObject HiddenPickUp;
 
     private Rigidbody rb;
     private int count;
@@ -24,8 +28,10 @@ public class PlayerController : MonoBehaviour
         count = 0;
         SetCountText();
         WinTextObject.SetActive(false);
+        WinTextObjectSecret.SetActive(false);
     }
-    void OnMove (InputValue movementValue)
+
+    void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
@@ -35,10 +41,20 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if(count >= 12)
+        if (count == 6)
         {
             WinTextObject.SetActive(true);
         }
+        if (count >= 7)
+        {
+            WinTextObject.SetActive(false);
+            WinTextObjectSecret.SetActive(true);
+        }
+    }
+    void HideComponent()
+    {
+        HiddenWall.SetActive(false);
+        HiddenPickUp.SetActive(false);
     }
 
     void FixedUpdate()
@@ -54,6 +70,11 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false); 
             count++;
             SetCountText();
+            if(count >=6)
+            {
+                HideComponent();
+            }
         }
+
     }
 }
